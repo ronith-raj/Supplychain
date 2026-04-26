@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteGuard AI - Smart Logistics Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar for Controls -->
+        <aside class="sidebar">
+            <header class="logo-container">
+                <h1>RouteGuard AI</h1>
+                <span class="badge">BETA</span>
+            </header>
+            
+            <!-- Metrics Dashboard -->
+            <div class="metrics-dashboard">
+                <div class="metric-card">
+                    <span class="metric-title">Est. Time</span>
+                    <h3 id="metric-time">--</h3>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-title">Distance</span>
+                    <h3 id="metric-distance">--</h3>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-title">Risk Level</span>
+                    <h3 id="metric-risk" class="risk-safe">--</h3>
+                </div>
+            </div>
+
+            <section class="controls">
+                <div class="route-inputs">
+                    <div class="input-group">
+                        <label for="source">Source (Start)</label>
+                        <input type="text" id="source" placeholder="e.g., New York, NY">
+                    </div>
+                    <div class="input-group">
+                        <label for="destination">Destination (End)</label>
+                        <input type="text" id="destination" placeholder="e.g., Boston, MA">
+                    </div>
+                    
+                    <div class="routing-mode">
+                        <label>Delivery Priority:</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="priority" value="normal" checked>
+                                <span class="custom-radio"></span>
+                                Normal (Safest)
+                            </label>
+                            <label class="radio-label emergency-label">
+                                <input type="radio" name="priority" value="emergency">
+                                <span class="custom-radio"></span>
+                                Emergency (Fastest)
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="calculate-btn" class="primary-btn">Calculate Route</button>
+                </div>
+
+                <!-- Early Warning Alerts Container -->
+                <div id="alerts-container" class="alerts-container hidden">
+                    <h3>Active Warnings</h3>
+                    <div id="alert-list"></div>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Risk Notification Modal -->
+        <div id="risk-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div class="modal-header">
+                    <h2>⚠️ High Risk Route Detected</h2>
+                </div>
+                <div class="modal-body">
+                    <p>The safest available route still exceeds acceptable risk thresholds for climate/traffic disruptions.</p>
+                    <p><strong>Recommendation:</strong> Delay shipment or request manual override.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="override-btn" class="secondary-btn">Proceed Anyway</button>
+                    <button id="cancel-btn" class="primary-btn" style="margin-top:0;">Cancel Shipment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Map Area -->
+        <main class="map-container">
+            <div id="map">
+                <!-- Map will be rendered here -->
+                <div class="placeholder-text">Map rendering area</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <!-- Google Maps API. The user will replace YOUR_API_KEY_HERE with their real key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=initMap&libraries=places" async defer></script>
+</body>
+</html>
