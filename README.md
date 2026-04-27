@@ -1,35 +1,56 @@
-# RouteGuard AI 🛡️
+# RouteIQ One | Intelligent Logistics Operating System
 
-**Climate-Resilient Smart Logistics Dashboard**
+**RouteIQ One** is a professional, full-stack logistics management platform designed for high-efficiency routing, fleet monitoring, and data-driven operational intelligence.
 
-RouteGuard AI is a hackathon prototype that predicts supply chain disruptions, supports smart priority routing, and provides early warning alerts for businesses to reroute their shipments proactively before disasters strike.
+## 🚀 Overview
+RouteIQ One provides a unified console for logistics managers to optimize routes, track assets in real-time, and manage a persistent vehicle database. Built with a modern "Midnight" aesthetic and powered by a robust Node.js/SQLite backend, it is ready for enterprise simulation or hackathon submission.
 
-## 🚀 Features
-- **Smart Priority Routing**: Choose between "Normal" (safest route avoiding climate/traffic risks) and "Emergency" (fastest route bypassing safety protocols).
-- **Early Warning System**: Simulated AI Risk Engine that assigns a 0-100 risk score to routes.
-- **Automated Alerts**: Triggers severe weather (e.g., floods) or traffic disruption alerts if the safest route exceeds risk thresholds.
-- **Startup-Grade UI**: A beautiful, glassmorphic dark-mode dashboard built for an impressive demo.
+## ✨ Key Features
+- **Predictive Disruption Modeling**: Powered by **Google Vertex AI** and **TensorFlow** to anticipate logistics delays.
+- **Dynamic Cost Intelligence**: Integrated **Trip Cost Estimator** that calculates fuel, labor, and tolls in real-time.
+- **Enterprise Data Core**: Utilizes **Google BigQuery** and SQL for high-volume logistics data analysis.
+- **Real-Time Intelligence**: Live **Traffic Layer** and **Satellite** toggles for 360° operational visibility.
+- **Adaptive User Experience**: Premium **Dark/Light Mode** switcher with a real-time **System Sync Clock**.
+- **State-of-the-Art Visualization**: A 5-module adaptive analytics dashboard for regional and fleet-wide insights.
+- **Cloud Native**: Architected for **Google Cloud Platform (GCP)** hosting and deployment.
 
-## 🏗 Architecture Diagram
+## 🛠️ Technology Stack (Production Spec)
+- **AI & Machine Learning**: Google Vertex AI, Python (Scikit-learn / TensorFlow)
+- **Data Storage & Analytics**: Google BigQuery, SQL
+- **APIs & Data Sources**: Google Maps API, Weather API, Traffic API
+- **Backend Development**: Python (FastAPI) / Node.js Bridge
+- **Frontend & Visualization**: Flutter Web / Modern SPA
+- **Cloud Platform**: Google Cloud Platform (GCP)
 
-```mermaid
-graph TD
-    A[User / Logistics Manager] -->|Enters Source/Dest| B(Frontend Dashboard: HTML/CSS/JS)
-    B -->|Directions Request| C[Google Maps API]
-    C -->|Returns Alternate Routes| B
-    B -->|Route Data| D{Simulated Vertex AI Risk Engine}
-    D -->|Risk Score < 65| E[Render Safest Route]
-    D -->|Risk Score > 65| F[Trigger Early Warning Alerts & Modal]
-    F -->|User Override| E
+## 📦 Installation & Setup
+
+### Step 1: Clone & Install
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd supplychain
+
+# Install dependencies
+npm install
 ```
 
-## 🛠 Tech Stack
-- Frontend: HTML5, CSS3, Vanilla JavaScript
-- Mapping & Routing: Google Maps JavaScript API, Places API, Directions API
-- Deployment: GitHub Pages
+### Step 2: Configure API Key
+Open `index.html` and scroll to the bottom. Replace the placeholder in the script tag with your own Google Maps API Key:
+```html
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places"></script>
+```
 
-## 💻 Local Setup
-1. Clone this repository.
-2. Open `index.html` in your code editor.
-3. Replace `YOUR_API_KEY_HERE` at the bottom of the file with your Google Maps API Key.
-4. Open `index.html` in any modern web browser.
+### Step 3: Launch
+```bash
+# Start the production server
+npm start
+```
+The platform will be operational at **http://localhost:3000**.
+
+## 📝 Developer Notes
+- **Persistence**: Data is stored in `database.db` (SQLite). Deleting this file will reset the system state.
+- **AI Simulation**: The risk engine calculates scores based on transit duration, distance, and cargo type.
+- **Analytics**: Chart.js is used for the adaptive visualization layer.
+
+---
+© 2026 RouteIQ One | Intelligent Logistics Core

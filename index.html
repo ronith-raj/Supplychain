@@ -3,104 +3,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RouteGuard AI - Smart Logistics Dashboard</title>
+    <title>RouteIQ One | Intelligent Logistics OS</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Sidebar for Controls -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <div class="logo-text">RouteIQ <span class="text-cyan">One</span></div>
+            <nav class="main-nav">
+                <a href="#" class="active" data-view="dashboard">Dashboard</a>
+                <a href="#" data-view="fleet">Fleet</a>
+                <a href="#" data-view="tracking">Routes</a>
+                <a href="#" data-view="analytics">Analytics</a>
+                <a href="#">Maintenance</a>
+            </nav>
+        </div>
+        <div class="nav-right">
+            <button class="nav-icon"><i class="fa-solid fa-bell"></i><span class="dot"></span></button>
+            <button class="nav-icon"><i class="fa-solid fa-gear"></i></button>
+            <button class="nav-icon"><i class="fa-solid fa-circle-question"></i></button>
+            <div class="user-pill-small" id="user-initials">OP</div>
+        </div>
+    </header>
+
+    <div class="app-shell">
         <aside class="sidebar">
-            <header class="logo-container">
-                <h1>RouteGuard AI</h1>
-                <span class="badge">BETA</span>
-            </header>
-            
-            <!-- Metrics Dashboard -->
-            <div class="metrics-dashboard">
-                <div class="metric-card">
-                    <span class="metric-title">Est. Time</span>
-                    <h3 id="metric-time">--</h3>
-                </div>
-                <div class="metric-card">
-                    <span class="metric-title">Distance</span>
-                    <h3 id="metric-distance">--</h3>
-                </div>
-                <div class="metric-card">
-                    <span class="metric-title">Risk Level</span>
-                    <h3 id="metric-risk" class="risk-safe">--</h3>
+            <div class="cp-panel">
+                <div class="cp-icon"><i class="fa-solid fa-microchip"></i></div>
+                <div class="cp-info">
+                    <h3>Control Panel</h3>
+                    <span>AI OPERATIONS</span>
                 </div>
             </div>
 
-            <section class="controls">
-                <div class="route-inputs">
-                    <div class="input-group">
-                        <label for="source">Source (Start)</label>
-                        <input type="text" id="source" placeholder="e.g., New York, NY">
+            <ul class="side-nav">
+                <li class="side-item active" data-view="dashboard"><i class="fa-solid fa-grip"></i> Dashboard</li>
+                <li class="side-item" data-view="fleet"><i class="fa-solid fa-truck-fast"></i> Global Fleet</li>
+                <li class="side-item" data-view="analytics"><i class="fa-solid fa-chart-line"></i> Risk Monitor</li>
+                <li class="side-item" data-view="climate"><i class="fa-solid fa-cloud-sun"></i> Climate Intelligence</li>
+                <li class="side-item" data-view="reports"><i class="fa-solid fa-chart-simple"></i> Reports</li>
+            </ul>
+
+            <div class="emergency-action">
+                <div class="emergency-pill">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Emergency Protocols</span>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="#"><i class="fa-solid fa-circle-question"></i> Support</a>
+                <a href="#" data-view="settings"><i class="fa-solid fa-database"></i> System Status</a>
+            </div>
+        </aside>
+
+        <main class="main-viewport">
+            <!-- DASHBOARD VIEW -->
+            <section id="view-dashboard" class="app-view">
+                <div class="view-intro">
+                    <h2>Operational Command</h2>
+                    <p>Real-time telemetry and predictive routing analysis.</p>
+                </div>
+
+                <div class="dashboard-metrics-row">
+                    <div class="m-card risk-card">
+                        <div class="m-head"><span>RISK SCORE</span> <i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="m-content">
+                            <div class="m-main">72%</div>
+                            <div class="m-sub">WARNING</div>
+                        </div>
+                        <div class="m-progress"><div class="m-fill" style="width: 72%;"></div></div>
                     </div>
-                    <div class="input-group">
-                        <label for="destination">Destination (End)</label>
-                        <input type="text" id="destination" placeholder="e.g., Boston, MA">
+                    <div class="m-card priority-card">
+                        <div class="m-head"><span>DELIVERY PRIORITY</span> <i class="fa-solid fa-bolt"></i></div>
+                        <div class="m-content">
+                            <div class="m-main">HIGH</div>
+                            <div class="m-sub">OPTIMIZED</div>
+                        </div>
+                        <div class="m-steps"><span></span><span></span><span></span><span class="active"></span></div>
                     </div>
-                    
-                    <div class="routing-mode">
-                        <label>Delivery Priority:</label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="priority" value="normal" checked>
-                                <span class="custom-radio"></span>
-                                Normal (Safest)
-                            </label>
-                            <label class="radio-label emergency-label">
-                                <input type="radio" name="priority" value="emergency">
-                                <span class="custom-radio"></span>
-                                Emergency (Fastest)
-                            </label>
+                    <div class="m-card delay-card">
+                        <div class="m-head"><span>PREDICTED DELAY</span> <i class="fa-solid fa-clock"></i></div>
+                        <div class="m-content">
+                            <div class="m-main">1.2h</div>
+                            <div class="m-sub">-15% FROM AVG</div>
+                        </div>
+                        <p class="ai-note">AI recommendation active</p>
+                    </div>
+                    <div class="m-card alert-card">
+                        <div class="m-head"><span>ACTIVE ALERTS</span> <i class="fa-solid fa-bullhorn"></i></div>
+                        <div class="m-content">
+                            <div class="m-main">3</div>
+                            <div class="m-sub">CRITICAL</div>
+                        </div>
+                        <div class="m-indicators"><span></span><span></span><span></span></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-body-grid">
+                    <div class="map-primary-container glass-panel">
+                        <div class="map-overlay-top">
+                            <div class="telemetry-tag">TELEMETRY LAYER</div>
+                            <div class="sat-tag"><i class="fa-solid fa-satellite"></i> LIVE SAT FEED</div>
+                        </div>
+                        <div id="map"></div>
+                        <div class="map-overlay-bottom">
+                            <button class="view-alt-btn">View Alternate</button>
+                            <div id="live-clock" class="clock-display">00:00:00</div>
                         </div>
                     </div>
 
-                    <button id="calculate-btn" class="primary-btn">Calculate Route</button>
+                    <aside class="dashboard-right-sidebar glass-panel">
+                        <div class="panel-header"><i class="fa-solid fa-bell"></i> EARLY WARNING ALERTS</div>
+                        <div class="alerts-feed">
+                            <div class="alert-item critical">
+                                <div class="a-header"><span>FLOOD RISK</span> <span>2m ago</span></div>
+                                <p>Heavy precipitation in Dresden. Route A sub-merged risk 85%.</p>
+                                <button class="btn-ack">ACKNOWLEDGE</button>
+                            </div>
+                            <div class="alert-item warning">
+                                <div class="a-header"><span>TRAFFIC</span> <span>14m ago</span></div>
+                                <p>Major pileup on A12. Expected delay +45 mins for all heavy fleet.</p>
+                                <button class="btn-ack">ACKNOWLEDGE</button>
+                            </div>
+                            <div class="alert-item info">
+                                <div class="a-header"><span>STRIKE ALERT</span> <span>1h ago</span></div>
+                                <p>Port of Hamburg wildcat strike. Loading operations suspended.</p>
+                                <button class="btn-ack">ACKNOWLEDGE</button>
+                            </div>
+                        </div>
+                        <div class="ai-fab-btn"><i class="fa-solid fa-bolt"></i></div>
+                    </aside>
                 </div>
-
-                <!-- Early Warning Alerts Container -->
-                <div id="alerts-container" class="alerts-container hidden">
-                    <h3>Active Warnings</h3>
-                    <div id="alert-list"></div>
+                
+                <!-- Optimization Panel (Hidden inside Dashboard Grid for cleaner look) -->
+                <div class="optimization-drawer glass-panel">
+                    <h3><i class="fa-solid fa-route"></i> Route Optimization</h3>
+                    <div class="opt-form">
+                        <div class="opt-field">
+                            <label>Origin</label>
+                            <input type="text" id="source" placeholder="Port of Rotterdam">
+                        </div>
+                        <div class="opt-field">
+                            <label>Destination</label>
+                            <input type="text" id="destination" placeholder="Berlin Logistics Hub">
+                        </div>
+                        <div class="opt-field">
+                            <label>Priority</label>
+                            <select>
+                                <option>High Priority/Emergency</option>
+                                <option>Standard Optimization</option>
+                            </select>
+                        </div>
+                        <button id="calculate-btn" class="opt-btn">Optimize Route</button>
+                    </div>
                 </div>
             </section>
-        </aside>
 
-        <!-- Risk Notification Modal -->
-        <div id="risk-modal" class="modal hidden">
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <div class="modal-header">
-                    <h2>⚠️ High Risk Route Detected</h2>
+            <!-- FLEET VIEW -->
+            <section id="view-fleet" class="app-view hidden">
+                <div class="view-intro-row">
+                    <div class="view-text">
+                        <h2>Fleet Operations Overview</h2>
+                        <p>Real-time status tracking and asset management</p>
+                    </div>
+                    <button id="show-add-vehicle" class="register-btn"><i class="fa-solid fa-plus"></i> Register New Asset</button>
                 </div>
-                <div class="modal-body">
-                    <p>The safest available route still exceeds acceptable risk thresholds for climate/traffic disruptions.</p>
-                    <p><strong>Recommendation:</strong> Delay shipment or request manual override.</p>
-                </div>
-                <div class="modal-footer">
-                    <button id="override-btn" class="secondary-btn">Proceed Anyway</button>
-                    <button id="cancel-btn" class="primary-btn" style="margin-top:0;">Cancel Shipment</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Main Map Area -->
-        <main class="map-container">
-            <div id="map">
-                <!-- Map will be rendered here -->
-                <div class="placeholder-text">Map rendering area</div>
-            </div>
+                <div class="fleet-stats-row">
+                    <div class="f-stat-card">
+                        <div class="fs-head"><span>Total Assets</span> <i class="fa-solid fa-truck-moving"></i></div>
+                        <div class="fs-body">
+                            <div class="fs-val">48</div>
+                            <div class="fs-trend">+2 THIS MONTH</div>
+                        </div>
+                    </div>
+                    <div class="f-stat-card">
+                        <div class="fs-head"><span>In Transit</span> <i class="fa-solid fa-truck-fast"></i></div>
+                        <div class="fs-body">
+                            <div class="fs-val">32</div>
+                            <div class="fs-sub">67% OF TOTAL CAPACITY</div>
+                        </div>
+                    </div>
+                    <div class="f-stat-card">
+                        <div class="fs-head"><span>Maintenance</span> <i class="fa-solid fa-wrench"></i></div>
+                        <div class="fs-body">
+                            <div class="fs-val">4</div>
+                            <div class="fs-status text-red">2 URGENT REPAIRS</div>
+                        </div>
+                    </div>
+                    <div class="f-stat-card">
+                        <div class="fs-head"><span>Idle</span> <i class="fa-solid fa-circle-pause"></i></div>
+                        <div class="fs-body">
+                            <div class="fs-val">12</div>
+                            <div class="fs-sub">READY FOR DISPATCH</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fleet-body-grid">
+                    <div class="fleet-list-container glass-panel">
+                        <div class="list-header">
+                            <h3>Fleet Inventory</h3>
+                            <div class="list-actions">
+                                <div class="search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" placeholder="Search assets...">
+                                </div>
+                                <button class="filter-btn"><i class="fa-solid fa-sliders"></i></button>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ASSET ID</th>
+                                    <th>TYPE</th>
+                                    <th>STATUS</th>
+                                    <th>FUEL / BATTERY</th>
+                                    <th>OPERATOR</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fleet-table-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <aside class="fleet-right-sidebar glass-panel">
+                        <div class="predictor-header">
+                            <div class="ph-left">
+                                <h3><i class="fa-solid fa-microchip"></i> AI Predictor</h3>
+                                <p>Analyzing 450+ data points per asset</p>
+                            </div>
+                            <div class="live-tag">LIVE SENSORS</div>
+                        </div>
+                        <div class="prediction-list">
+                            <div class="prediction-card">
+                                <div class="pc-header">
+                                    <span class="pc-id">RG-8802</span>
+                                    <span class="pc-conf text-red">92% CONFIDENCE</span>
+                                </div>
+                                <h4>Transmission Fluid Service</h4>
+                                <p>Predicted failure in 420 mi based on heat signatures.</p>
+                                <button class="pc-btn">Schedule Service</button>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <!-- ANALYTICS VIEW -->
+            <section id="view-analytics" class="app-view hidden">
+                <header class="view-header-minimal">
+                    <div class="minimal-text">
+                        <h3>DATA COMMAND</h3>
+                        <span>Adaptive Analytics & Performance Insights</span>
+                    </div>
+                </header>
+                <div class="analytics-layout">
+                    <div class="analytics-grid">
+                        <div class="glass-panel chart-card">
+                            <h3><i class="fa-solid fa-chart-line"></i> Delivery Performance</h3>
+                            <canvas id="efficiencyChart"></canvas>
+                        </div>
+                        <div class="glass-panel chart-card">
+                            <h3><i class="fa-solid fa-shield-halved"></i> Risk Mitigation</h3>
+                            <canvas id="riskChart"></canvas>
+                        </div>
+                        <div class="glass-panel chart-card">
+                            <h3><i class="fa-solid fa-gas-pump"></i> Fuel Efficiency</h3>
+                            <canvas id="fuelChart"></canvas>
+                        </div>
+                        <div class="glass-panel chart-card">
+                            <h3><i class="fa-solid fa-earth-americas"></i> Regional Optimization</h3>
+                            <canvas id="regionChart"></canvas>
+                        </div>
+                        <div class="glass-panel chart-card">
+                            <h3><i class="fa-solid fa-truck-ramp-box"></i> Fleet Utilization</h3>
+                            <canvas id="utilizationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SETTINGS VIEW -->
+            <section id="view-settings" class="app-view hidden">
+                <header class="view-header-minimal">
+                    <div class="minimal-text">
+                        <h3>SYSTEM CONFIGURATION</h3>
+                        <span>Security & Integration Settings</span>
+                    </div>
+                </header>
+                <div class="settings-layout">
+                    <div class="glass-panel profile-settings">
+                        <div class="p-top">
+                            <img id="profile-avatar" src="" alt="User">
+                            <div class="p-info">
+                                <h2 id="display-name">Admin</h2>
+                                <p id="display-role">Logistics Director</p>
+                            </div>
+                        </div>
+                        <form id="profile-form" class="p-form">
+                            <input type="text" id="edit-name" placeholder="Full Name">
+                            <input type="text" id="edit-role" placeholder="Role">
+                            <input type="email" id="edit-email" placeholder="Email">
+                            <button type="submit" class="opt-btn">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="glass-panel infra-card">
+                        <h3>Infrastructure Integrity</h3>
+                        <div class="infra-list">
+                            <div class="infra-row"><span>Analytics Engine</span> <strong class="text-cyan">BigQuery</strong></div>
+                            <div class="infra-row"><span>AI Model</span> <strong class="text-cyan">Vertex AI</strong></div>
+                            <div class="infra-row"><span>Cloud Status</span> <strong class="text-green">GCP Active</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CLIMATE INTELLIGENCE VIEW -->
+            <section id="view-climate" class="app-view hidden">
+                <header class="view-header-minimal">
+                    <div class="minimal-text">
+                        <h3>CLIMATE INTELLIGENCE</h3>
+                        <span>Environmental Risk & ESG Monitoring</span>
+                    </div>
+                </header>
+                <div class="climate-layout">
+                    <div class="climate-main glass-panel">
+                        <div class="climate-header">
+                            <h4><i class="fa-solid fa-earth-americas"></i> Global Hazard Map</h4>
+                            <div class="hazard-legend">
+                                <span class="l-item high">Severe Storm</span>
+                                <span class="l-item med">Rising Sea</span>
+                                <span class="l-item low">Heatwave</span>
+                            </div>
+                        </div>
+                        <div class="climate-map-container">
+                            <img src="assets/tracking_ui.png" alt="Weather Overlay" style="filter: hue-rotate(180deg) brightness(0.6);">
+                            <div class="hazard-pin h-critical" style="top: 25%; left: 45%;">!</div>
+                            <div class="hazard-pin h-warning" style="top: 65%; left: 25%;">!</div>
+                        </div>
+                    </div>
+                    <div class="climate-sidebar">
+                        <div class="glass-panel climate-stat-box">
+                            <h4>Carbon Footprint</h4>
+                            <div class="carbon-meter">
+                                <span class="c-val">124.5 tons</span>
+                                <span class="c-trend down">↓ 4.2% THIS WEEK</span>
+                            </div>
+                            <canvas id="carbonChart" style="height: 120px;"></canvas>
+                        </div>
+                        <div class="glass-panel climate-alerts">
+                            <h4>Active Risk Zones</h4>
+                            <div class="zone-item">
+                                <div class="z-meta"><span>NORTH ATLANTIC</span> <strong class="text-red">CRITICAL</strong></div>
+                                <p>Storm "Epsilon" intensity peaking. Maritime routes suspended.</p>
+                            </div>
+                            <div class="zone-item">
+                                <div class="z-meta"><span>SAHARA HUB</span> <strong class="text-orange">WARNING</strong></div>
+                                <p>Extreme temperature spike. Battery efficiency reduction expected.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REPORTS VIEW -->
+            <section id="view-reports" class="app-view hidden">
+                <header class="view-header-minimal">
+                    <div class="minimal-text">
+                        <h3>OPERATIONAL REPORTS</h3>
+                        <span>Performance Audits & Compliance Data</span>
+                    </div>
+                </header>
+                <div class="reports-grid">
+                    <div class="glass-panel report-browser">
+                        <div class="browser-header">
+                            <h4>Report Repository</h4>
+                            <button class="opt-btn small">Request Custom Audit</button>
+                        </div>
+                        <div class="report-list">
+                            <div class="report-file">
+                                <div class="f-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                                <div class="f-info">
+                                    <strong>Weekly Efficiency Audit - Q2 W15</strong>
+                                    <span>PDF • 4.2 MB • Generated 2h ago</span>
+                                </div>
+                                <button class="download-btn"><i class="fa-solid fa-download"></i></button>
+                            </div>
+                            <div class="report-file">
+                                <div class="f-icon"><i class="fa-solid fa-file-csv"></i></div>
+                                <div class="f-info">
+                                    <strong>Fleet Maintenance Log</strong>
+                                    <span>CSV • 1.1 MB • Generated Yesterday</span>
+                                </div>
+                                <button class="download-btn"><i class="fa-solid fa-download"></i></button>
+                            </div>
+                            <div class="report-file">
+                                <div class="f-icon"><i class="fa-solid fa-file-lines"></i></div>
+                                <div class="f-info">
+                                    <strong>ESG Sustainability Impact</strong>
+                                    <span>JSON • 850 KB • Generated 3d ago</span>
+                                </div>
+                                <button class="download-btn"><i class="fa-solid fa-download"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel report-summary">
+                        <h4>Monthly Summary Statistics</h4>
+                        <div class="summary-stats">
+                            <div class="s-row"><span>Total Deliveries</span> <strong>1,240</strong></div>
+                            <div class="s-row"><span>On-Time Rate</span> <strong>94.2%</strong></div>
+                            <div class="s-row"><span>Risk Incidents</span> <strong>8</strong></div>
+                            <div class="s-row"><span>Cost Saved (AI)</span> <strong class="text-green">$12,450</strong></div>
+                        </div>
+                        <div class="export-tool">
+                            <h5>Export Global Dataset</h5>
+                            <select>
+                                <option>Last 30 Days</option>
+                                <option>Last Quarter</option>
+                                <option>Full Year 2026</option>
+                            </select>
+                            <button class="opt-btn">Initialize Export</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
-    <!-- Scripts -->
     <script src="script.js"></script>
-    <!-- Google Maps API. The user will replace YOUR_API_KEY_HERE with their real key -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=initMap&libraries=places" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAr8Y4DSlRmVFsYReIjCN3tuQgBD6rDeGM&callback=initMap&libraries=places" async defer></script>
 </body>
 </html>
